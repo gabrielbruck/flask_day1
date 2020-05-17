@@ -1,7 +1,6 @@
-from os import abort
-
 from flask import Flask, json
 import requests
+from BasePost import BasePost
 
 app = Flask(__name__)
 
@@ -9,6 +8,19 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
+
+
+# @app.route('/post/<userId>')
+# def representClass(userId):
+#     data = BasePost(userId, '2', "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+#                     "quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit ")
+#     response = app.response_class(
+#         response=json.dumps(data, default=lambda o: o.__dict__),
+#         status=200,
+#         mimetype='application/json'
+#
+#     )
+#     return response
 
 
 @app.route('/posts/')
@@ -49,7 +61,7 @@ def get_user_id(userId):
 
 @app.route('/posts/<postId>/comments')
 def get_user_comment(postId):
-    id_tweet = requests.get('https://jsonplaceholder.typicode.com/posts/'+ postId +'/comments')
+    id_tweet = requests.get('https://jsonplaceholder.typicode.com/posts/' + postId + '/comments')
     posts = id_tweet.json()
     response = app.response_class(
         response=json.dumps(posts),
