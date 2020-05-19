@@ -54,3 +54,6 @@ def addNewUser(user):
     user_add = json.loads(newUser.MakeUserDict())
     list_user[user_add['id']] = user_add
 
+
+def add_key_to_instrument(key, value, instrument_id):
+    list_instruments[instrument_id][key] = value
