@@ -3,7 +3,7 @@ import random
 import string
 
 
-class Instrument:
+class Instrument():
     def __init__(self, instrument):
         self.type = instrument["type"]
         self.user_id = "no user id"
@@ -15,7 +15,7 @@ class Instrument:
         return dict
 
 
-class User:
+class User():
     def __init__(self, user):
         self.firstName = user["firstName"]
         self.lastName = user["lastName"]
@@ -26,7 +26,7 @@ class User:
         return dict
 
 
-def makerandomid(stringLength=6):
+def makerandomid(stringLength=8):
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(stringLength))
 
@@ -44,12 +44,13 @@ list_user = {}
 
 
 def addNewInstrument(instrument):
-    instrum = Instrument(instrument)
-    instrum_add = json.load(instrum.MakeAInstrumentDict())
-    list_instruments[instrum_add['id']] = instrum_add
+    newInstrument = Instrument(instrument)
+    instrument_add = json.loads(newInstrument.MakeAInstrumentDict())
+    list_instruments[instrument_add['id']] = instrument_add
 
 
 def addNewUser(user):
     newUser = User(user)
-    user_add = json.load(newUser.MakeUserDict())
+    user_add = json.loads(newUser.MakeUserDict())
     list_user[user_add['id']] = user_add
+

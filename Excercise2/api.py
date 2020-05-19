@@ -1,4 +1,4 @@
-from flask import Flask, json, request, abort
+from flask import Flask, json
 from Instrument import GetInstruments, GetUser, addNewInstrument, addNewUser
 
 
@@ -20,8 +20,8 @@ def get_all_instruments():
     return response
 
 
-@app.route('/user')
-def get_user():
+@app.route('/users')
+def get_users():
     response = app.response_class(
         response=json.dumps(GetUser()),
         status=200,
@@ -30,27 +30,22 @@ def get_user():
     return response
 
 
-@app.route('/add/instruments/<type>', methods=["GET", "POST"])
-def add_new_instrument(type):
-    addNewInstrument({"type": type})
+@app.route('/add/instruments/<instrument_type>', methods=["POST"])
+def add_new_instrument(instrument_type):
+    addNewInstrument({"type": instrument_type})
     response = app.response_class(
-        response=json.dumps({"type": type}),
+        response=json.dumps({"type": instrument_type}),
         status=200,
         mimetype='application/json'
     )
     return response
 
 
-@app.route('/add/user', methods=["GET", "POST"])
-def add_new_user():
-    content = request.json
-    new_user_to_add = {
-        "firstName": content["firstName"],
-        "lastName": content["lastName"]
-    }
-    addNewUser(new_user_to_add)
+@app.route('/add/user/<firstName>/<lastName>', methods=["GET", "POST"])
+def add_new_user(firstName, lastName):
+    addNewUser({"firstName": firstName, "lastName": lastName})
     response = app.response_class(
-        response=json.dumps(new_user_to_add),
+        response=json.dumps({"firstName": firstName, "lastName": lastName}),
         status=200,
         mimetype='application/json'
     )
